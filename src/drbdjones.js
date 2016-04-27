@@ -48,5 +48,6 @@ app.get('/', function(req, res) {
     res.render('home',social);
 });
 
-app.listen(PORT);
-console.log('Running on http://localhost:' + PORT);
+app.listen(process.env.PORT || 3000, function(){
+  console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
+});
