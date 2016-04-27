@@ -17,5 +17,8 @@
     "qr-image": "latest",
 	  "jade-bootstrap":"latest",
     "gm":"latest"
+  },
+  "scripts": {
+  "start": "node src/drbdjones.js"
   }
 }
