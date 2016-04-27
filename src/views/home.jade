@@ -1,0 +1,18 @@
+extends layout
+
+block append content
+	.col-xs-12.col-md-6(style="text-align:right")
+		img(src="public/img/profile_circle.png")
+	.col-xs-12.col-md-6
+		b Dr. Bruce Jones
+		br
+		|Scientist, Engineer, Maker
+		br
+		a(href="http://dr.bdjone.es") dr.bdjon.es
+		br
+		a(href="mailto:bdjones@mit.edu") bdjones@mit.edu
+		br
+		|+1 (617) 863-7939
+		each soc in social
+			br
+			a(href="#{soc.url}") #{soc.url}
