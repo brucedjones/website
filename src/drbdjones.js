@@ -50,7 +50,7 @@ app.get('/', function(req, res) {
     if (err) {
       handleError(res, err.message, "Failed to get contact");
     } else {
-      res.status(200).json(doc);
+      res.status(200).json(docs);
     }
   });
     //res.render('home',social);
