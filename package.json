@@ -11,7 +11,8 @@
     "express": "~4.12.4",
     "jade": "~1.9.2",
     "serve-favicon": "~2.2.1",
-    "mongodb": "~2.1.18"
+    "mongodb": "~2.1.18",
+    "morgan": "~1.5.3",
   },
   "scripts": {
   "start": "node src/drbdjones.js"
