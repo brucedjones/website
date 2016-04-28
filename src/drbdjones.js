@@ -1,14 +1,3 @@
-// DATA
-var social = {social:[
-{title: "LinkedIn", fa:"fa fa-linkedin", url:"https://www.linkedin.com/pub/bruce-jones/29/5b5/79a"},
-{title: "Twitter", fa:"fa fa-twitter", url:"https://twitter.com/DrBruceJones"},
-{title: "ResearchGate", fa:"ai ai-researchgate", url:"https://www.researchgate.net/profile/Bruce_Jones9"},
-{title: "Google Scholar", fa:"ai ai-google-scholar", url:"https://scholar.google.com/citations?hl=en&user=DArWtW8AAAAJ"},
-{title: "GitHub", fa:"fa fa-github", url:"https://github.com/brucedjones"},
-{title: "Facebook", fa:"fa fa-facebook", url:"https://www.facebook.com/brucedjones"},
-{title: "Docker", fa:"fa fa-docker", url:"https://hub.docker.com/u/brucedjones/"}
-]};
-
 // Constants
 var express = require('express');
 //var MongoClient = require('mongodb').MongoClient, assert = require('assert');
@@ -48,17 +37,15 @@ app.use(function(req,res,next){
 app.get('/', function(req, res) {
 	db.collection("social").find({}).toArray(function(err, docs) {
     if (err) {
-      res.status(500).send({error:"Failed to get social"});
+      res.status(500).send({error:"Failed to get data from database"});
     } else {
       var data = {};
       data.social = docs;
       res.render('home',data);
     }
   });
-    //res.render('home',social);
 });
 
-//Required for heroku
 // Connect to the database before starting the application server.
 MongoClient.connect(process.env.MONGODB_URI, function (err, database) {
   if (err) {
