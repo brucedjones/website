@@ -50,7 +50,9 @@ app.get('/', function(req, res) {
     if (err) {
       res.status(500).send({error:"Failed to get social"});
     } else {
-      res.status(200).json(docs);
+      var data = {};
+      data.social = docs;
+      res.render('home',data);
     }
   });
     //res.render('home',social);
