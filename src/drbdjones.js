@@ -46,7 +46,14 @@ app.use(function(req,res,next){
 });
 
 app.get('/', function(req, res) {
-    res.render('home',social);
+	db.collection("social").find({}, function(err, docs) {
+    if (err) {
+      handleError(res, err.message, "Failed to get contact");
+    } else {
+      res.status(200).json(doc);
+    }
+  });
+    //res.render('home',social);
 });
 
 //Required for heroku
