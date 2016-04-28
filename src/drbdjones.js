@@ -46,7 +46,7 @@ app.use(function(req,res,next){
 });
 
 app.get('/', function(req, res) {
-	db.collection("social").find({}, function(err, docs) {
+	db.collection("social").find({}).toArray(function(err, docs) {
     if (err) {
       res.status(500).send({error:"Failed to get social"});
     } else {
