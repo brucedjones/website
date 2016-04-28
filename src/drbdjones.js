@@ -48,7 +48,7 @@ app.use(function(req,res,next){
 app.get('/', function(req, res) {
 	db.collection("social").find({}, function(err, docs) {
     if (err) {
-      handleError(res, err.message, "Failed to get contact");
+      res.status(500).send({error:"Failed to get social"});
     } else {
       res.status(200).json(docs);
     }
