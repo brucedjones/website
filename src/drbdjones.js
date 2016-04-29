@@ -30,21 +30,20 @@ app.use("/public", express.static(path.join(__dirname, 'public')));
 
 // Make our db accessible to our router
 app.use(function(req,res,next){
-    //req.db = db;
-    next();
+	
+	db.collection("social").find({}).toArray(function(err, docs) {
+    	if (err) {
+    	  	res.status(500).send({error:"Failed to get data from database"});
+    	} else {
+    		res.locals.db = db;
+    		res.locals.social = docs;
+    		next();
+    	}
+  	});
 });
 
-app.get('/', function(req, res) {
-	db.collection("social").find({}).toArray(function(err, docs) {
-    if (err) {
-      res.status(500).send({error:"Failed to get data from database"});
-    } else {
-      var data = {};
-      data.social = docs;
-      res.render('home',data);
-    }
-  });
-});
+var home = require('./routes/home');
+app.use('/', home);
 
 // Connect to the database before starting the application server.
 MongoClient.connect(process.env.MONGODB_URI, function (err, database) {
@@ -63,3 +62,5 @@ MongoClient.connect(process.env.MONGODB_URI, function (err, database) {
     console.log("App now running on port", port);
   });
 });
+
+module.exports = app;
