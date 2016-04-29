@@ -1,7 +1,47 @@
-extends ../../node_modules/jade-bootstrap/_bootstrap
+extends layout
 
-append body
-	block content
-		include ./head.jade
-		h1
-			|Hello!
+block append content
+	.col-xs-12
+		.col-xs-12.col-md-3
+			h2
+				|Skills
+		.col-xs-12.col-md-9
+			p
+				#[b Programming Languages:] 
+				#[ C++]
+			p
+				#[b APIs]
+			p
+				#[b Numerical Methods]
+	hr
+	.col-xs-12
+		.col-xs-12.col-md-3
+			h2
+				|Work Experience
+		.col-xs-12.col-md-9
+			b Research Scientist
+			br
+			|2016-Present
+			br
+			|Civil And Environmental Engineering, Massachusetts Institute of Technology, 77 Massachusetts Ave, Cambridge, MA
+			br
+			ul
+				li
+					|Managed research in both fluid and solid mechanics. Including investigations in to failure of complex materials due to extreme fluid pressures.
+				li
+					|Implementation of high performance geometric manipulation tools. Parallel libraries based on C++ with OpenMP, with a python API.
+	hr
+	.col-xs-12
+		.col-xs-12.col-md-3
+			h2
+				|Education
+		.col-xs-12.col-md-9
+	hr
+	.col-xs-12
+		.col-xs-12.col-md-3
+			h2
+				|Interests
+		.col-xs-12.col-md-9
+
+
+	

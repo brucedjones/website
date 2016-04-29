@@ -43,7 +43,10 @@ app.use(function(req,res,next){
 });
 
 var home = require('./routes/home');
-app.use('/', home);
+app.use(home);
+
+var resume = require('./routes/resume');
+app.use(resume);
 
 // Connect to the database before starting the application server.
 MongoClient.connect(process.env.MONGODB_URI, function (err, database) {
