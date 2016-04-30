@@ -6,42 +6,63 @@ block append content
 			h2
 				|Skills
 		.col-xs-12.col-md-9
-			p
-				#[b Programming Languages:] 
-				#[ C++]
-			p
-				#[b APIs]
-			p
-				#[b Numerical Methods]
+			.col-xs-12
+				each set in skills
+					p
+						#[b #{set.title}: ]
+						each skill, i in set.items
+							if i === 0
+								#[ #{skill}]
+							else
+								#[ , #{skill}]
 	hr
 	.col-xs-12
 		.col-xs-12.col-md-3
 			h2
 				|Work Experience
 		.col-xs-12.col-md-9
-			b Research Scientist
-			br
-			|2016-Present
-			br
-			|Civil And Environmental Engineering, Massachusetts Institute of Technology, 77 Massachusetts Ave, Cambridge, MA
-			br
-			ul
-				li
-					|Managed research in both fluid and solid mechanics. Including investigations in to failure of complex materials due to extreme fluid pressures.
-				li
-					|Implementation of high performance geometric manipulation tools. Parallel libraries based on C++ with OpenMP, with a python API.
+			each job in work
+				.col-xs-6
+					b #{job.title}
+				.col-xs-6.text-right
+					if job.start === job.end
+						|#{job.start}
+					else
+						|#{job.start}-#{job.end}
+				.col-xs-12
+					|#{job.company}
+					br
+					ul
+						each item in job.items
+							li
+								|#{item}
 	hr
 	.col-xs-12
 		.col-xs-12.col-md-3
 			h2
 				|Education
 		.col-xs-12.col-md-9
+			each degree in education
+				.col-xs-6
+					b #{degree.degree}
+				.col-xs-6.text-right
+					|#{degree.year}
+				.col-xs-12
+					|#{degree.university}
+					br
+					if degree.thesis
+						|Thesis: #{degree.thesis}
+					p
 	hr
 	.col-xs-12
 		.col-xs-12.col-md-3
 			h2
-				|Interests
+				|Activities
 		.col-xs-12.col-md-9
+			ul
+				each activity in activities
+					li
+						!{activity.item}
 
 
 	

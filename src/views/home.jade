@@ -1,9 +1,9 @@
 extends layout
 
 block append content
-	.col-xs-12.col-md-6(style="text-align:right")
+	.col-xs-6.hidden-xs.hidden-sm.text-right
 		img(src="public/img/profile_circle.png")
-	.col-xs-12.col-md-6
+	.col-xs-6.hidden-xs.hidden-sm
 		b Dr. Bruce Jones
 		br
 		|Scientist, Engineer, Maker
@@ -13,6 +13,21 @@ block append content
 		a(href="mailto:bdjones@mit.edu") bdjones@mit.edu
 		br
 		|+1 (617) 863-7939
-		each soc in social
-			br
-			a(href="#{soc.url}") #{soc.url}
+		br
+		<a target="_blank" href="http://geonumerics.mit.edu"><img style="height:80px;" src="public/img/mit.svg"></img></a>
+		<a target="_blank" href="http://www.cambridgehackspace.com"><img style="height:80px;" src="public/img/ch.svg"></img></a>
+	.col-xs-12.hidden-md.hidden-lg.text-center
+		img(src="public/img/profile_circle.png")
+	.col-xs-12.hidden-md.hidden-lg.text-center
+		b Dr. Bruce Jones
+		br
+		|Scientist, Engineer, Maker
+		br
+		a(href="http://dr.bdjone.es") dr.bdjon.es
+		br
+		a(href="mailto:bdjones@mit.edu") bdjones@mit.edu
+		br
+		|+1 (617) 863-7939
+		br
+		<a target="_blank" href="http://geonumerics.mit.edu"><img style="height:80px;" src="public/img/mit.svg"></img></a>
+		<a target="_blank" href="http://www.cambridgehackspace.com"><img style="height:80px;" src="public/img/ch.svg"></img></a>
