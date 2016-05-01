@@ -48,6 +48,9 @@ app.use(home);
 var resume = require('./routes/resume');
 app.use(resume);
 
+var publications = require('./routes/publications');
+app.use(publications);
+
 // Connect to the database before starting the application server.
 MongoClient.connect(process.env.MONGODB_URI, function (err, database) {
   if (err) {

@@ -1,0 +1,17 @@
+extends layout
+
+block append content
+	.col-xs-12
+		.col-xs-12.col-md-3
+			h2
+				|Journal Articles
+		.col-xs-12.col-md-9
+			each article in journal
+				p
+					b #{article.title}
+					br
+					|#[ #{article.authors}, ] #[ #{article.journal}, ] #[ #{article.year} ]
+	hr
+
+
+	

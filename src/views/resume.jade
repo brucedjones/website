@@ -32,7 +32,7 @@ block append content
 				.col-xs-12
 					|#{job.company}
 					br
-					ul
+					ul(class="list-unstyled icon-list chevron-right")
 						each item in job.items
 							li
 								|#{item}
@@ -59,7 +59,7 @@ block append content
 			h2
 				|Activities
 		.col-xs-12.col-md-9
-			ul
+			ul(class="list-unstyled icon-list chevron-right")
 				each activity in activities
 					li
 						!{activity.item}
