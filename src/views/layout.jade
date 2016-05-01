@@ -26,20 +26,20 @@ html
                         ul.nav.navbar-nav
                             li(style="display: inline-flex !important;")
                                 each soc in social
-                                    a(style="padding-right:0px;",href="#{soc.url}",target="_blank")
+                                    a(style="padding-left:3px;padding-right:3px;",href="#{soc.url}",target="_blank")
                                         i(class="#{soc.fa}")
                         ul.nav.navbar-nav.navbar-right
                             li
-                                a(href="/resume")
+                                a(style="padding-left:3px;",href="/resume")
                                     |Resume
                             li
-                                a(href="/publications")
+                                a(style="padding-left:3px;",href="/publications")
                                     |Publications
                             li
-                                a(href="/hardware")
+                                a(style="padding-left:3px;",href="/hardware")
                                     |Hardware
                             li
-                                a(href="/software")
+                                a(style="padding-left:3px;",href="/software")
                                     |Software
   .container
     #content
