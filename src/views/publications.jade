@@ -8,10 +8,28 @@ block append content
 		.col-xs-12.col-md-9
 			each article in journal
 				p
-					b #{article.title}
+					if article.doi
+						a(href="http://dx.doi.org/#{article.doi}", style="color:inherit;")
+							b #{article.title}
+					else
+						b #{article.title}
 					br
 					|#[ #{article.authors}, ] #[ #{article.journal}, ] #[ #{article.year} ]
 	hr
+	.col-xs-12
+		.col-xs-12.col-md-3
+			h2
+				|Conferences
+		.col-xs-12.col-md-9
+			each conf in conference
+				p
+					if conf.doi
+						a(href="http://dx.doi.org/#{conf.doi}", style="color:inherit;")
+							b #{conf.title}
+					else
+						b #{conf.title}
+					br
+					|#[ #{conf.authors}, ] #[ #{conf.conference}, ] #[ #{conf.year} ]
 
 
 	
