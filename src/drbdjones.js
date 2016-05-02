@@ -37,6 +37,7 @@ app.use(function(req,res,next){
     	} else {
     		res.locals.db = db;
     		res.locals.social = docs;
+    		res.locals.fixed_footer = false;
     		next();
     	}
   	});

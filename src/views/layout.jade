@@ -41,8 +41,19 @@ html
                             //li
                             //    a(style="padding-left:3px;",href="/software")
                             //        |Software
-  .container
-    #content
-      block content
+  div(id="wrap")
+    .container
+        #content
+            block content
+    if fixed_footer === true
+        footer.navbar-fixed-bottom
+            .container.text-center
+                p.text-muted
+                    |Copyright &copy; #{new Date().getFullYear()} Dr. Bruce Jones
+    else
+        footer
+            .container.text-center
+                p.text-muted
+                    |Copyright &copy; #{new Date().getFullYear()} Dr. Bruce Jones
   script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js")
   script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js",integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS",crossorigin="anonymous")
