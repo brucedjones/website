@@ -46,7 +46,11 @@ html
         #content
             block content
     if fixed_footer === true
-        footer.navbar-fixed-bottom
+        footer.hidden-md.hidden-lg
+            .container.text-center
+                p.text-muted
+                    |Copyright &copy; #{new Date().getFullYear()} Dr. Bruce Jones
+        footer.navbar-fixed-bottom.hidden-xs.hidden-sm
             .container.text-center
                 p.text-muted
                     |Copyright &copy; #{new Date().getFullYear()} Dr. Bruce Jones
