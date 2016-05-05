@@ -1,12 +1,14 @@
 extends layout
 
 block append content
-	.col-xs-5
-		each code in software
+	each code in software
+		.col-xs-12.col-md-4
 			.panel.panel-default
 				.panel-heading
-					a(href="http://www.github.com/brucedjones/#{code.github}",target="_blank")
-						|<i class="fa fa-github"></i> #{code.title}
+					|#{code.title}
+					.pull-right
+						a(href="http://www.github.com/brucedjones/#{code.github}",target="_blank")
+							|<i class="fa fa-github"></i> Github
 				.panel-body
 					|!{code.description}
 				.panel-footer.text-right
