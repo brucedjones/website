@@ -1,17 +1,18 @@
 extends layout
-
+block append head
+	link(rel="stylesheet",href="public/css/panel_masonry.css")
 block append content
-	each code in software
-		.col-xs-12.col-md-4
-			.panel.panel-default
-				.panel-heading
-					b #{code.title}
-					.pull-right
-						a(href="http://www.github.com/brucedjones/#{code.github}",target="_blank")
-							|<i class="fa fa-github"></i> Github
-				.panel-body
-					|!{code.description}
-				.panel-footer.text-right
-					each tag in code.tags
-						.label(style="margin-right:5px").label-info
-							|#{tag}
+	.row
+		each code in software
+				.panel.panel-default
+					.panel-heading
+						b #{code.title}
+						.pull-right
+							a(href="http://www.github.com/brucedjones/#{code.github}",target="_blank")
+								|<i class="fa fa-github"></i> Github
+					.panel-body
+						|!{code.description}
+					.panel-footer.text-right
+						each tag in code.tags
+							.label(style="margin-right:5px").label-info
+								|#{tag}

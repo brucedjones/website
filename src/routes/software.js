@@ -5,32 +5,14 @@ router.get('/software', function(req, res) {
 
     res.locals.fixed_footer = true;
 
-    res.locals.software = [];
-    res.locals.software.push({title:"This Website",
-    	github:"website",
-    	description:"This site served two purposes. <ul> <li>Finally set up a proper website for myself.</li> <li>A good oppurtunity to become more familiar with Express and Heroku.</li></ul>",
-    	tags:["Node.js","Express","Heroku"]
+    res.locals.db.collection("software").find({}).toArray(function(err, docs) {
+        if (err) {
+            res.status(500).send({error:"Failed to get data from database"});
+        } else {
+            res.locals.software = docs;
+            res.render('software');
+        }
     });
-
-    res.locals.software.push({title:"This Website",
-    	github:"website",
-    	description:"This site served two purposes. <ul> <li>Finally set up a proper website for myself.</li> <li>A good oppurtunity to become more familiar with Express and Heroku.</li></ul>",
-    	tags:["Node.js","Express","Heroku"]
-    });
-
-    res.locals.software.push({title:"This Website",
-    	github:"website",
-    	description:"This site served two purposes. <ul> <li>Finally set up a proper website for myself.</li> <li>A good oppurtunity to become more familiar with Express and Heroku.</li></ul>",
-    	tags:["Node.js","Express","Heroku"]
-    });
-
-    res.locals.software.push({title:"This Website",
-    	github:"website",
-    	description:"This site served two purposes. <ul> <li>Finally set up a proper website for myself.</li> <li>A good oppurtunity to become more familiar with Express and Heroku.</li></ul>",
-    	tags:["Node.js","Express","Heroku"]
-    });
-
-    res.render('software');
     
 });
 
