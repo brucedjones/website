@@ -12,8 +12,7 @@
     "jade": "~1.9.2",
     "serve-favicon": "~2.2.1",
     "mongodb": "~2.1.18",
-    "morgan": "~1.5.3",
-    "github": "~0.2.4"
+    "morgan": "~1.5.3"
   },
   "scripts": {
   "start": "node src/drbdjones.js"

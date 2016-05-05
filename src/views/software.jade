@@ -1,5 +1,15 @@
 extends layout
 
 block append content
-	.col-xs-12
-		|#{software}
+	.col-xs-5
+		each code in software
+			.panel.panel-default
+				.panel-heading
+					a(href="http://www.github.com/brucedjones/#{code.github}",target="_blank")
+						|<i class="fa fa-github"></i> #{code.title}
+				.panel-body
+					|!{code.description}
+				.panel-footer.text-right
+					each tag in code.tags
+						.label(style="margin-right:5px").label-info
+							|#{tag}
