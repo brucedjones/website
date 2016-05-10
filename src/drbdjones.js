@@ -55,6 +55,9 @@ app.use(publications);
 var software = require('./routes/software');
 app.use(software);
 
+var hardware = require('./routes/hardware');
+app.use(hardware);
+
 // Connect to the database before starting the application server.
 MongoClient.connect(process.env.MONGODB_URI, function (err, database) {
   if (err) {
