@@ -1,11 +1,11 @@
 extends layout
 block append head
 block append content
-	each project in projects
+	each project in hardware
 		.col-xs-12.col-md-4.text-center
 			div(style="margin-bottom:20px")
 				a(href='#')
-					img(src="#{project.photos[0].url}s300/#{project.photos[0].fname}")
+					img(src="#{project.photos[0].url}s300/#{project.photos[0].fname}" style ="object-fit:cover; object-position: center; height: 225px; width: 300px;")
 					br
 					b #{project.title}
 					br

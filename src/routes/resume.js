@@ -1,39 +1,36 @@
 var express = require('express');
 var router = express.Router();
 
+var async = require('async');
+
 router.get('/resume', function(req, res) {
-	res.locals.db.collection("skills").find({}).toArray(function(err, docs) {
-    	if (err) {
-    	  	res.status(500).send({error:"Failed to get data from database"});
-    	} else {
-    		res.locals.skills = docs;
 
-    		res.locals.db.collection("work").find({}).toArray(function(err, docs) {
-    			if (err) {
-    	  			res.status(500).send({error:"Failed to get data from database"});
-    			} else {
-    				res.locals.work = docs;
+    res.locals.fixed_footer = true;
+    
+    collections = ["skills","work","education","activities"];
 
-					res.locals.db.collection("education").find({}).toArray(function(err, docs) {
-    					if (err) {
-    	  					res.status(500).send({error:"Failed to get data from database"});
-    					} else {
-    						res.locals.education = docs;
+    var render = function(err) {
+        if(err)
+        {
+            res.status(500).send({error:"Failed to get data from database"});
+        } else {
+            res.render('resume');
+        }
+    };
 
-							res.locals.db.collection("activities").find({}).toArray(function(err, docs) {
-    							if (err) {
-    	  							res.status(500).send({error:"Failed to get data from database"});
-    							} else {
-    								res.locals.activities = docs;
-									res.render('resume');
-    							}
-  							});
-    					}
-  					});
-    			}
-  			});
-    	}
-  	});
+    var getCollection = function(collection,callback){
+        res.locals.db.collection(collection).find({}).toArray(function(err, docs) {
+            if (err) {
+                res.status(500).send({error:"Failed to get data from " + collection});
+                callback("Failed to get data from" + collection);
+            } else {
+                res.locals[collection] = docs;
+                callback();
+            }
+        });
+    };
+
+    async.each(collections,getCollection,render);
 });
 
 module.exports = router;
