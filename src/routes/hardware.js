@@ -60,4 +60,44 @@ router.get('/hardware', function(req, res) {
     });
 });
 
+router.get('/hardware/:title', function(req , res){
+
+    res.locals.fixed_footer = true;
+
+    res.locals.db.collection("hardware").find({title:req.params.title}).toArray(function(err, docs) {
+        if (err || docs.length<1) {
+            res.status(500).send({error:"Failed to get data from database"});
+        } else {
+        	album_id = docs[0].picasa;
+   			url = "http://picasaweb.google.com/data/feed/api/user/102348159258081608276/albumid/" + album_id + "?alt=json";
+   			http.request(url, function(response) {
+				var str = '';
+
+					  //another chunk of data has been recieved, so append it to `str`
+				response.on('data', function (chunk) {
+				  str += chunk;
+				});
+
+				  //the whole response has been recieved, so we just print it out here
+				response.on('end', function () {
+					album_data = JSON.parse(str);
+				  	title = album_data.feed.title.$t;
+
+				  	photos = [];
+				  	album_data.feed.entry.forEach(function(photo){
+				  		url = photo.media$group.media$content[0].url;
+				  		fname = url.substring(url.lastIndexOf('/')+1);
+				  		url = url.substring(0,url.lastIndexOf('/')+1);
+				  		description = photo.media$group.media$description.$t;
+				  		photos.push({url:url,fname:fname,description:description});
+				  	});
+
+				  	res.locals.project = {title:title,photos:photos};
+					res.render('hardware_project');
+				});
+			}).end();
+        }
+    });
+});
+
 module.exports = router;
