@@ -48,7 +48,7 @@ router.get('/hardware', function(req, res) {
 					  		photos.push({url:url,fname:fname,description:description});
 					  	});
 
-					    hardware.push({title:title,photos:photos});
+					    hardware.push({id:album.title,title:title,photos:photos});
 
 					  	callback();
 					});
@@ -62,7 +62,7 @@ router.get('/hardware', function(req, res) {
 
 router.get('/hardware/:title', function(req , res){
 
-    res.locals.fixed_footer = true;
+    res.locals.fixed_footer = false;
 
     res.locals.db.collection("hardware").find({title:req.params.title}).toArray(function(err, docs) {
         if (err || docs.length<1) {
@@ -92,7 +92,7 @@ router.get('/hardware/:title', function(req , res){
 				  		photos.push({url:url,fname:fname,description:description});
 				  	});
 
-				  	res.locals.project = {title:title,photos:photos};
+				  	res.locals.project = {id:docs[0].title,title:title,photos:photos, description:docs[0].description};
 					res.render('hardware_project');
 				});
 			}).end();

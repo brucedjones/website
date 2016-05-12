@@ -1,7 +1,37 @@
 extends layout
 block append content
-	h1
+	script.
+		var dispImg = function(url,fname,description){
+			disp_img = document.getElementById('disp-img');
+			disp_desc = document.getElementById('disp-description');
+			disp_img.src = url+"s768/"+fname;
+			disp_desc.innerHTML = description;
+		};
+
+	h2
 		|#{project.title}
+	hr
+	.col-xs-8.text-center
+		img(id="disp-img" src="#{project.photos[0].url}s768/#{project.photos[0].fname}" style ="object-fit:cover; object-position: center; height: 576; width: 768;").img-thumbnail
+		br
+		h4(id="disp-description").text-left
+			|#{project.photos[0].description}
+		hr
+		.col-xs-12.text-left
+			h3
+				|Description
+			#[ !{project.description}]
+
+
+	.col-xs-4.text-center
+		each photo, i in project.photos
+			if i>1
+				.col-xs-12.col-md-6
+					a( role="button" onclick="dispImg('#{photo.url}','#{photo.fname}','#{photo.description}')")
+						img(src="#{photo.url}s192/#{photo.fname}" style ="object-fit:cover; object-position: center; height: 144; width: 192;").img-thumbnail
+		
+
+	hr
 	//each project in hardware
 	//	.col-xs-12.col-md-4.text-center
 	//		div(style="margin-bottom:20px")
