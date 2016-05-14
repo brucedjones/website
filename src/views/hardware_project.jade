@@ -14,13 +14,13 @@ block append content
 		hr
 	.col-xs-12.col-md-6.text-center
 		.col-xs-12.hidden-md.hidden-lg
-			.carousel(id="thumb-carousel").slide
+			.carousel(id="sm-carousel").slide
 				ol.carousel-indicators
 					each photo, i in project.photos
 						if(i==0)
-							li(data-target="#thumb-carousel" data-slide-to="#{i}" class="active")
+							li(data-target="#sm-carousel" data-slide-to="#{i}" class="active")
 						else
-							li(data-target="#thumb-carousel" data-slide-to="#{i}")
+							li(data-target="#sm-carousel" data-slide-to="#{i}")
 				.carousel-inner
 					each photo, i in project.photos
 						if(i==0)
@@ -37,18 +37,18 @@ block append content
 										img(id="disp-img" src="#{photo.url}s768/#{photo.fname}" style ="object-fit:cover; object-position: center; height: 200px;").img-thumbnail
 									br
 									|#{photo.description}
-				a(href="#thumb-carousel" data-slide="prev").left.carousel-control
+				a(href="#sm-carousel" data-slide="prev").left.carousel-control
 					.i(aria-hidden="true").fa.fa-chevron-left(style="color: black;")
-				a(href="#thumb-carousel" data-slide="next").right.carousel-control
+				a(href="#sm-carousel" data-slide="next").right.carousel-control
 					.i(aria-hidden="true").fa.fa-chevron-right(style="color: black;")
 		.col-xs-12.hidden-xs.hidden-sm
-			.carousel(id="thumb-carousel").slide
+			.carousel(id="lg-carousel").slide
 				ol.carousel-indicators
 					each photo, i in project.photos
 						if(i==0)
-							li(data-target="#thumb-carousel" data-slide-to="#{i}" class="active")
+							li(data-target="#lg-carousel" data-slide-to="#{i}" class="active")
 						else
-							li(data-target="#thumb-carousel" data-slide-to="#{i}")
+							li(data-target="#lg-carousel" data-slide-to="#{i}")
 				.carousel-inner
 					each photo, i in project.photos
 						if(i==0)
@@ -65,14 +65,17 @@ block append content
 										img(id="disp-img" src="#{photo.url}s768/#{photo.fname}" style ="object-fit:cover; object-position: center; height: 400px;").img-thumbnail
 									br
 									|#{photo.description}
-				a(href="#thumb-carousel" data-slide="prev").left.carousel-control
+				a(href="#lg-carousel" data-slide="prev").left.carousel-control
 					.i(aria-hidden="true").fa.fa-chevron-left(style="color: black;")
-				a(href="#thumb-carousel" data-slide="next").right.carousel-control
+				a(href="#lg-carousel" data-slide="next").right.carousel-control
 					.i(aria-hidden="true").fa.fa-chevron-right(style="color: black;")
 block append script-block
 	script.
 		$(document).ready(function() {
-			$('#thumb-carousel').carousel({
+			$('#lg-carousel').carousel({
+			interval: 10000
+			})
+			$('#sm-carousel').carousel({
 			interval: 10000
 			})
 		});
