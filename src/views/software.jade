@@ -2,6 +2,9 @@ extends layout
 block append head
 	link(rel="stylesheet",href="public/css/panel_masonry.css")
 block append content
+	h2
+		|Software
+	hr
 	.row
 		each code in software
 				.panel.panel-default

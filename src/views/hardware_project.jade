@@ -13,7 +13,7 @@ block append content
 	.col-xs-12.hidden-md.hidden-lg
 		hr
 	.col-xs-12.col-md-6.text-center
-		.col-xs-12
+		.col-xs-12.hidden-md.hidden-lg
 			.carousel(id="thumb-carousel").slide
 				ol.carousel-indicators
 					each photo, i in project.photos
@@ -26,13 +26,43 @@ block append content
 						if(i==0)
 							.row-fluid.item.active
 								.col-xs-12.text-center
-									img(id="disp-img" src="#{photo.url}s768/#{photo.fname}" style ="object-fit:cover; object-position: center; height: 400px;").img-thumbnail
+									a(href="#{photo.url}s1024/#{photo.fname}" target="_blank")
+										img(id="disp-img" src="#{photo.url}s768/#{photo.fname}" style ="object-fit:cover; object-position: center; height: 200px;").img-thumbnail
 									br
 									|#{photo.description}
 						else
 							.row-fluid.item
 								.col-xs-12.text-center
-									img(id="disp-img" src="#{photo.url}s768/#{photo.fname}" style ="object-fit:cover; object-position: center; height: 400px;").img-thumbnail
+									a(href="#{photo.url}s1024/#{photo.fname}" target="_blank")
+										img(id="disp-img" src="#{photo.url}s768/#{photo.fname}" style ="object-fit:cover; object-position: center; height: 200px;").img-thumbnail
+									br
+									|#{photo.description}
+				a(href="#thumb-carousel" data-slide="prev").left.carousel-control
+					.i(aria-hidden="true").fa.fa-chevron-left(style="color: black;")
+				a(href="#thumb-carousel" data-slide="next").right.carousel-control
+					.i(aria-hidden="true").fa.fa-chevron-right(style="color: black;")
+		.col-xs-12.hidden-xs.hidden-sm
+			.carousel(id="thumb-carousel").slide
+				ol.carousel-indicators
+					each photo, i in project.photos
+						if(i==0)
+							li(data-target="#thumb-carousel" data-slide-to="#{i}" class="active")
+						else
+							li(data-target="#thumb-carousel" data-slide-to="#{i}")
+				.carousel-inner
+					each photo, i in project.photos
+						if(i==0)
+							.row-fluid.item.active
+								.col-xs-12.text-center
+									a(href="#{photo.url}s1024/#{photo.fname}" target="_blank")
+										img(id="disp-img" src="#{photo.url}s768/#{photo.fname}" style ="object-fit:cover; object-position: center; height: 400px;").img-thumbnail
+									br
+									|#{photo.description}
+						else
+							.row-fluid.item
+								.col-xs-12.text-center
+									a(href="#{photo.url}s1024/#{photo.fname}" target="_blank")
+										img(id="disp-img" src="#{photo.url}s768/#{photo.fname}" style ="object-fit:cover; object-position: center; height: 400px;").img-thumbnail
 									br
 									|#{photo.description}
 				a(href="#thumb-carousel" data-slide="prev").left.carousel-control
