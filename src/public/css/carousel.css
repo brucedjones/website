@@ -1,0 +1,32 @@
+.carousel {
+	margin-bottom: 0;
+	padding: 30px 30px 0px 30px;
+}
+
+.carousel-control {
+  	top: 200px;
+	left: -12px;
+    font-size: 30px;
+    background-color:#ffffff !important;
+}
+
+.carousel-control.right {
+	right: -12px;
+}
+
+.carousel-indicators {
+	right: 50%;
+	bottom: auto;
+	top: 0px;
+	margin-right: -19px;
+}
+
+.carousel-indicators li {
+	background: #c0c0c0;
+}
+
+.carousel-indicators .active {
+background: #333333;
+}
+
+.carousel-control { background: none !important; filter: none !important; progid:none !important; }

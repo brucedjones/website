@@ -62,7 +62,7 @@ router.get('/hardware', function(req, res) {
 
 router.get('/hardware/:title', function(req , res){
 
-    res.locals.fixed_footer = false;
+    res.locals.fixed_footer = true;
 
     res.locals.db.collection("hardware").find({title:req.params.title}).toArray(function(err, docs) {
         if (err || docs.length<1) {

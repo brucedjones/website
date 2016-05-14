@@ -1,42 +1,48 @@
 extends layout
+block append head
+	link(rel="stylesheet",href="/public/css/carousel.css")
 block append content
-	script.
-		var dispImg = function(url,fname,description){
-			disp_img = document.getElementById('disp-img');
-			disp_desc = document.getElementById('disp-description');
-			disp_img.src = url+"s768/"+fname;
-			disp_desc.innerHTML = description;
-		};
-
 	h2
 		|#{project.title}
 	hr
-	.col-xs-8.text-center
-		img(id="disp-img" src="#{project.photos[0].url}s768/#{project.photos[0].fname}" style ="object-fit:cover; object-position: center; height: 576; width: 768;").img-thumbnail
-		br
-		h4(id="disp-description").text-left
-			|#{project.photos[0].description}
-		hr
-		.col-xs-12.text-left
+
+	.col-xs-12.col-md-6.text-left
 			h3
 				|Description
 			#[ !{project.description}]
-
-
-	.col-xs-4.text-center
-		each photo, i in project.photos
-			if i>1
-				.col-xs-12.col-md-6
-					a( role="button" onclick="dispImg('#{photo.url}','#{photo.fname}','#{photo.description}')")
-						img(src="#{photo.url}s192/#{photo.fname}" style ="object-fit:cover; object-position: center; height: 144; width: 192;").img-thumbnail
-		
-
-	hr
-	//each project in hardware
-	//	.col-xs-12.col-md-4.text-center
-	//		div(style="margin-bottom:20px")
-	//			a(href='#')
-	//				img(src="#{project.photos[0].url}s300/#{project.photos[0].fname}" style ="object-fit:cover; object-position: center; height: 225px; width: 300px;")
-	//				br
-	//				b #{project.title}
-	//				br
+	.col-xs-12.hidden-md.hidden-lg
+		hr
+	.col-xs-12.col-md-6.text-center
+		.col-xs-12
+			.carousel(id="thumb-carousel").slide
+				ol.carousel-indicators
+					each photo, i in project.photos
+						if(i==0)
+							li(data-target="#thumb-carousel" data-slide-to="#{i}" class="active")
+						else
+							li(data-target="#thumb-carousel" data-slide-to="#{i}")
+				.carousel-inner
+					each photo, i in project.photos
+						if(i==0)
+							.row-fluid.item.active
+								.col-xs-12.text-center
+									img(id="disp-img" src="#{photo.url}s768/#{photo.fname}" style ="object-fit:cover; object-position: center; height: 400px;").img-thumbnail
+									br
+									|#{photo.description}
+						else
+							.row-fluid.item
+								.col-xs-12.text-center
+									img(id="disp-img" src="#{photo.url}s768/#{photo.fname}" style ="object-fit:cover; object-position: center; height: 400px;").img-thumbnail
+									br
+									|#{photo.description}
+				a(href="#thumb-carousel" data-slide="prev").left.carousel-control
+					.i(aria-hidden="true").fa.fa-chevron-left(style="color: black;")
+				a(href="#thumb-carousel" data-slide="next").right.carousel-control
+					.i(aria-hidden="true").fa.fa-chevron-right(style="color: black;")
+block append script-block
+	script.
+		$(document).ready(function() {
+			$('#thumb-carousel').carousel({
+			interval: 10000
+			})
+		});
