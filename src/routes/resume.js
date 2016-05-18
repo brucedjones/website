@@ -5,7 +5,7 @@ var async = require('async');
 
 router.get('/resume', function(req, res) {
 
-    res.locals.fixed_footer = true;
+    res.locals.fixed_footer = false;
     
     collections = ["skills","work","education","activities"];
 

@@ -3,7 +3,7 @@ var router = express.Router();
 
 router.get('/software', function(req, res) {
 
-    res.locals.fixed_footer = true;
+    res.locals.fixed_footer = false;
 
     res.locals.db.collection("software").find({}).toArray(function(err, docs) {
         if (err) {
