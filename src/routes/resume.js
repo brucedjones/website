@@ -12,7 +12,10 @@ router.get('/resume', function(req, res) {
     var render = function(err) {
         if(err)
         {
-            res.status(500).send({error:"Failed to get data from database"});
+            var error = {code:"500",description:"Internal server error, please contact <a href='mailto:bdjones@mit.edu'>bdjones@mit.edu</a>"};
+            res.locals.error = error;
+            res.locals.fixed_footer = true;
+            res.status(500).render('error');
         } else {
             res.render('resume');
         }
@@ -21,7 +24,10 @@ router.get('/resume', function(req, res) {
     var getCollection = function(collection,callback){
         res.locals.db.collection(collection).find({}).toArray(function(err, docs) {
             if (err) {
-                res.status(500).send({error:"Failed to get data from " + collection});
+                var error = {code:"500",description:"Internal server error, please contact <a href='mailto:bdjones@mit.edu'>bdjones@mit.edu</a>"};
+                res.locals.error = error;
+                res.locals.fixed_footer = true;
+                res.status(500).render('error');
                 callback("Failed to get data from" + collection);
             } else {
                 res.locals[collection] = docs;

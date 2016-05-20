@@ -1,8 +1,8 @@
-extends ../../node_modules/jade-bootstrap/_bootstrap
+extends layout
 
-append body
-	block content
+block append content
+	.col-xs-12.text-center
 		h1
-			|Error #{err}
-		br
-		|#{message}
+			|Error #{error.code}
+		h3
+			|#{error.description}

@@ -10,14 +10,20 @@ router.get('/hardware', function(req, res) {
 
     res.locals.db.collection("hardware").find({}).toArray(function(err, docs) {
         if (err) {
-            res.status(500).send({error:"Failed to get data from database"});
+            var error = {code:"500",description:"Internal server error, please contact <a href='mailto:bdjones@mit.edu'>bdjones@mit.edu</a>"};
+			res.locals.error = error;
+			res.locals.fixed_footer = true;
+			res.status(500).render('error');
         } else {
         	hardware = [];
 
         	var render = function(err) {
         		if(err)
         		{
-        		    res.status(500).send({error:"Failed to get data from database"});
+        		    var error = {code:"500",description:"Internal server error, please contact <a href='mailto:bdjones@mit.edu'>bdjones@mit.edu</a>"};
+					res.locals.error = error;
+					res.locals.fixed_footer = true;
+					res.status(500).render('error');
         		} else {
         			res.locals.hardware = hardware;
             		res.render('hardware');
@@ -66,7 +72,10 @@ router.get('/hardware/:title', function(req , res){
 
     res.locals.db.collection("hardware").find({title:req.params.title}).toArray(function(err, docs) {
         if (err || docs.length<1) {
-            res.status(500).send({error:"Failed to get data from database"});
+            var error = {code:"404",description:"Page not found"};
+			res.locals.error = error;
+			res.locals.fixed_footer = true;
+			res.status(404).render('error');
         } else {
         	album_id = docs[0].picasa;
    			url = "http://picasaweb.google.com/data/feed/api/user/102348159258081608276/albumid/" + album_id + "?alt=json";

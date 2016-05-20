@@ -33,7 +33,7 @@ app.use(function(req,res,next){
 	
 	db.collection("social").find({}).toArray(function(err, docs) {
     	if (err) {
-    	  	res.status(500).send({error:"Failed to get data from database"});
+    	  	res.status(500).send({error:"Something went wrong, please contact bdjones@mit.edu"});
     	} else {
     		res.locals.db = db;
     		res.locals.social = docs;
@@ -57,6 +57,13 @@ app.use(software);
 
 var hardware = require('./routes/hardware');
 app.use(hardware);
+
+app.use(function(req, res, next) {
+	var error = {code:"404",description:"Page not found"};
+	res.locals.error = error;
+	res.locals.fixed_footer = true;
+	res.status(404).render('error');
+});
 
 // Connect to the database before starting the application server.
 MongoClient.connect(process.env.MONGODB_URI, function (err, database) {
