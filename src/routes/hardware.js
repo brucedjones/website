@@ -60,7 +60,7 @@ router.get('/hardware', function(req, res) {
 					});
 				}).end();
 
-				req.on('error', function(err){callback('Error getting data via http for ' + album.title);});
+				//req.on('error', function(err){callback('Error getting data via http for ' + album.title);});
 		    };
 
 		    async.each(docs,getAlbum,render);
@@ -108,7 +108,7 @@ router.get('/hardware/:title', function(req , res){
 				});
 			}).end();
 
-			req.on('error', function(err){callback('Error getting data via http for ' + docs[0].title);});
+			//req.on('error', function(err){callback('Error getting data via http for ' + docs[0].title);});
         }
     });
 });
