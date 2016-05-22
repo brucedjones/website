@@ -32,7 +32,7 @@ router.get('/hardware', function(req, res) {
 
     		var getAlbum = function(album,callback){
     			url = "http://picasaweb.google.com/data/feed/api/user/102348159258081608276/albumid/" + album.picasa + "?alt=json";
-    			http.request(url, function(response) {
+    			var req = http.request(url, function(response) {
 					var str = '';
 
 					  //another chunk of data has been recieved, so append it to `str`
@@ -56,9 +56,11 @@ router.get('/hardware', function(req, res) {
 
 					    hardware.push({id:album.title,title:title,photos:photos});
 
-					  	//callback();
+					  	callback();
 					});
 				}).end();
+
+				req.on('error', function(err){callback('Error getting data via http for ' + album.title);});
 		    };
 
 		    async.each(docs,getAlbum,render);
@@ -79,7 +81,7 @@ router.get('/hardware/:title', function(req , res){
         } else {
         	album_id = docs[0].picasa;
    			url = "http://picasaweb.google.com/data/feed/api/user/102348159258081608276/albumid/" + album_id + "?alt=json";
-   			http.request(url, function(response) {
+   			var req = http.request(url, function(response) {
 				var str = '';
 
 					  //another chunk of data has been recieved, so append it to `str`
@@ -105,6 +107,8 @@ router.get('/hardware/:title', function(req , res){
 					res.render('hardware_project');
 				});
 			}).end();
+
+			req.on('error', function(err){callback('Error getting data via http for ' + docs[0].title);});
         }
     });
 });
