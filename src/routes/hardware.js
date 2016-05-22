@@ -56,7 +56,7 @@ router.get('/hardware', function(req, res) {
 
 					    hardware.push({id:album.title,title:title,photos:photos});
 
-					  	callback();
+					  	//callback();
 					});
 				}).end();
 		    };
