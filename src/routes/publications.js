@@ -12,7 +12,7 @@ router.get('/publications', function(req, res) {
     var render = function(err) {
         if(err)
         {
-            var error = {code:"500",description:"Internal server error, please contact <a href='mailto:bdjones@mit.edu'>bdjones@mit.edu</a>"};
+            var error = {code:"500",description:"<p>Something went wrong! Please try again in a few minutes.</p><p>If the problem persists please contact contact <a href='mailto:bdjones@mit.edu'>bdjones@mit.edu</a></p>"};
             res.locals.error = error;
             res.locals.fixed_footer = true;
             res.status(500).render('error');
@@ -24,7 +24,7 @@ router.get('/publications', function(req, res) {
     var getCollection = function(collection,callback){
         res.locals.db.collection(collection).find({}).sort({year:-1}).toArray(function(err, docs) {
             if (err) {
-                var error = {code:"500",description:"Internal server error, please contact <a href='mailto:bdjones@mit.edu'>bdjones@mit.edu</a>"};
+                var error = {code:"500",description:"<p>Something went wrong! Please try again in a few minutes.</p><p>If the problem persists please contact contact <a href='mailto:bdjones@mit.edu'>bdjones@mit.edu</a></p>"};
                 res.locals.error = error;
                 res.locals.fixed_footer = true;
                 res.status(500).render('error');

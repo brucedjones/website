@@ -10,7 +10,7 @@ router.get('/hardware', function(req, res) {
 
     res.locals.db.collection("hardware").find({}).toArray(function(err, docs) {
         if (err) {
-            var error = {code:"500",description:"Something went wrong! Please try again in a few minutes. If the problem persists please contact contact <a href='mailto:bdjones@mit.edu'>bdjones@mit.edu</a>"};
+            var error = {code:"500",description:"<p>Something went wrong! Please try again in a few minutes.</p><p>If the problem persists please contact contact <a href='mailto:bdjones@mit.edu'>bdjones@mit.edu</a></p>"};
 			res.locals.error = error;
 			res.locals.fixed_footer = true;
 			res.status(500).render('error');
@@ -20,7 +20,7 @@ router.get('/hardware', function(req, res) {
         	var render = function(err) {
         		if(err)
         		{
-        		    var error = {code:"500",description:"Something went wrong! Please try again in a few minutes. If the problem persists please contact contact <a href='mailto:bdjones@mit.edu'>bdjones@mit.edu</a>"};
+        		    var error = {code:"500",description:"<p>Something went wrong! Please try again in a few minutes.</p><p>If the problem persists please contact contact <a href='mailto:bdjones@mit.edu'>bdjones@mit.edu</a></p>"};
 					res.locals.error = error;
 					res.locals.fixed_footer = true;
 					res.status(500).render('error');
@@ -114,7 +114,7 @@ router.get('/hardware/:title', function(req , res){
 						res.render('hardware_project');
 					} catch (e) {
 						console.log("Could not parse HTML request for project " + docs[0].title);
-					  	var error = {code:"500",description:"Something went wrong! Please try again in a few minutes. If the problem persists please contact contact <a href='mailto:bdjones@mit.edu'>bdjones@mit.edu</a>"};
+					  	var error = {code:"500",description:"<p>Something went wrong! Please try again in a few minutes.</p><p>If the problem persists please contact contact <a href='mailto:bdjones@mit.edu'>bdjones@mit.edu</a></p>"};
 						res.locals.error = error;
 						res.locals.fixed_footer = true;
 						res.status(500).render('error');
@@ -123,7 +123,7 @@ router.get('/hardware/:title', function(req , res){
 			});
 
 			req.on('error', function(err){
-				var error = {code:"500",description:"Something went wrong! Please try again in a few minutes. If the problem persists please contact contact <a href='mailto:bdjones@mit.edu'>bdjones@mit.edu</a>"};
+				var error = {code:"500",description:"<p>Something went wrong! Please try again in a few minutes.</p><p>If the problem persists please contact contact <a href='mailto:bdjones@mit.edu'>bdjones@mit.edu</a></p>"};
 				res.locals.error = error;
 				res.locals.fixed_footer = true;
 				res.status(500).render('error');
