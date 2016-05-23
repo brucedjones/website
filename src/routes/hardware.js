@@ -10,7 +10,7 @@ router.get('/hardware', function(req, res) {
 
     res.locals.db.collection("hardware").find({}).toArray(function(err, docs) {
         if (err) {
-            var error = {code:"500",description:"Internal server error, please contact <a href='mailto:bdjones@mit.edu'>bdjones@mit.edu</a>"};
+            var error = {code:"500",description:"Something went wrong! Please try again in a few minutes. If the problem persists please contact contact <a href='mailto:bdjones@mit.edu'>bdjones@mit.edu</a>"};
 			res.locals.error = error;
 			res.locals.fixed_footer = true;
 			res.status(500).render('error');
@@ -20,7 +20,7 @@ router.get('/hardware', function(req, res) {
         	var render = function(err) {
         		if(err)
         		{
-        		    var error = {code:"500",description:"Internal server error, please contact <a href='mailto:bdjones@mit.edu'>bdjones@mit.edu</a>"};
+        		    var error = {code:"500",description:"Something went wrong! Please try again in a few minutes. If the problem persists please contact contact <a href='mailto:bdjones@mit.edu'>bdjones@mit.edu</a>"};
 					res.locals.error = error;
 					res.locals.fixed_footer = true;
 					res.status(500).render('error');
@@ -42,21 +42,25 @@ router.get('/hardware', function(req, res) {
 
 					  //the whole response has been recieved, so we just print it out here
 					response.on('end', function () {
-						album_data = JSON.parse(str);
-					  	title = album_data.feed.title.$t;
+						try {
+							album_data = JSON.parse(str);
+					  		title = album_data.feed.title.$t;
 
-					  	photos = [];
-					  	album_data.feed.entry.forEach(function(photo){
-					  		url = photo.media$group.media$content[0].url;
-					  		fname = url.substring(url.lastIndexOf('/')+1);
-					  		url = url.substring(0,url.lastIndexOf('/')+1);
-					  		description = photo.media$group.media$description.$t;
-					  		photos.push({url:url,fname:fname,description:description});
-					  	});
+					  		photos = [];
+					  		album_data.feed.entry.forEach(function(photo){
+					  			url = photo.media$group.media$content[0].url;
+					  			fname = url.substring(url.lastIndexOf('/')+1);
+					  			url = url.substring(0,url.lastIndexOf('/')+1);
+					  			description = photo.media$group.media$description.$t;
+					  			photos.push({url:url,fname:fname,description:description});
+					  		});
 
-					    hardware.push({id:album.title,title:title,photos:photos});
+					    	hardware.push({id:album.title,title:title,photos:photos});
 
-					  	callback();
+					  		callback();
+					  	} catch (err) {
+					  		console.log("Could not parse HTML request for project " + album.title);
+					  		callback("Could not parse HTML request for project " + album.title);}
 					});
 				});
 
@@ -93,24 +97,38 @@ router.get('/hardware/:title', function(req , res){
 
 				  //the whole response has been recieved, so we just print it out here
 				response.on('end', function () {
-					album_data = JSON.parse(str);
-				  	title = album_data.feed.title.$t;
+					try{
+						album_data = JSON.parse(str);
+				  		title = album_data.feed.title.$t;
 
-				  	photos = [];
-				  	album_data.feed.entry.forEach(function(photo){
-				  		url = photo.media$group.media$content[0].url;
-				  		fname = url.substring(url.lastIndexOf('/')+1);
-				  		url = url.substring(0,url.lastIndexOf('/')+1);
-				  		description = photo.media$group.media$description.$t;
-				  		photos.push({url:url,fname:fname,description:description});
-				  	});
+				  		photos = [];
+				  		album_data.feed.entry.forEach(function(photo){
+				  			url = photo.media$group.media$content[0].url;
+				  			fname = url.substring(url.lastIndexOf('/')+1);
+				  			url = url.substring(0,url.lastIndexOf('/')+1);
+				  			description = photo.media$group.media$description.$t;
+				  			photos.push({url:url,fname:fname,description:description});
+				  		});
 
-				  	res.locals.project = {id:docs[0].title,title:title,photos:photos, description:docs[0].description};
-					res.render('hardware_project');
+				  		res.locals.project = {id:docs[0].title,title:title,photos:photos, description:docs[0].description};
+						res.render('hardware_project');
+					} catch (e) {
+						console.log("Could not parse HTML request for project " + docs[0].title);
+					  	var error = {code:"500",description:"Something went wrong! Please try again in a few minutes. If the problem persists please contact contact <a href='mailto:bdjones@mit.edu'>bdjones@mit.edu</a>"};
+						res.locals.error = error;
+						res.locals.fixed_footer = true;
+						res.status(500).render('error');
+					}
 				});
 			});
 
-			req.on('error', function(err){callback('Error getting data via http for ' + docs[0].title);});
+			req.on('error', function(err){
+				var error = {code:"500",description:"Something went wrong! Please try again in a few minutes. If the problem persists please contact contact <a href='mailto:bdjones@mit.edu'>bdjones@mit.edu</a>"};
+				res.locals.error = error;
+				res.locals.fixed_footer = true;
+				res.status(500).render('error');
+				console.log('Error getting data via http for ' + docs[0].title);
+			});
 
 			req.end();
         }
