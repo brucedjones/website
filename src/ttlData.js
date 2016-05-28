@@ -21,7 +21,6 @@ var ttlData =  function (ttl){
 		finish = function(data){
 			if (arguments.length>0)
 			{
-				console.log("num arguments = " + arguments.length);
 				props.preloaded = true;
 				props.loadTime = new Date();
 				props.data = data;
@@ -32,7 +31,6 @@ var ttlData =  function (ttl){
 		};
 
 		if(this.renew()){
-			console.log("getting new data");
 			loadData(finish);		
 		} else {
 			finalize(this.properties.data);
