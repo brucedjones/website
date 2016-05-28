@@ -1,32 +1,36 @@
 var ttlData =  function (ttl){
-	this.preloaded = false;
-	this.loadTime = new Date();
-	this.ttl = ttl;
+
+	this.properties = {preloaded:false,loadTime:new Date(),ttl:ttl, data:{}};
 
 	this.renew = function(){
-		if(this.preloaded)
+		if(this.properties.preloaded)
 		{
 			var timeNow = new Date();
-			if(timeNow.getTime()-this.loadTime.getTime()<this.ttl)
+			if(timeNow.getTime()-this.properties.loadTime.getTime()<this.properties.ttl)
 			{
-				return true;
+				return false;
 			}
 		}
-		return false;
+		return true;
 	};
 
-	this.getData = function(fnPreloaded,fnNotLoaded){
+	this.doCached = function(loadData,finalize){
+
+		var props = this.properties;
+
+		finish = function(data){
+			props.preloaded = true;
+			props.loadTime = new Date();
+			props.data = data;
+			finalize(data);
+		};
+
 		if(this.renew()){
-			fnPreloaded(this.data);
+			console.log("getting new data");
+			loadData(finish);		
 		} else {
-			fnNotLoaded(this);
+			finalize(this.properties.data);
 		}
-	};
-
-	this.setData = function(data){
-		this.preloaded = true;
-		this.loadTime = new Date();
-		this.data = data;
 	};
 
 };

@@ -37,26 +37,22 @@ app.use(function(req,res,next){
 	res.locals.db = db;
 	res.locals.fixed_footer = false;
 
-	var preloaded = function(data){
-		console.log("using preloaded social data");
+	var finalize = function(data){
 		res.locals.social = data;
 		next();
 	};
 
-	var notloaded = function(ttlobj){
-		console.log("Getting new social data");
+	var loadData = function(callback){
 		db.collection("social").find({}).toArray(function(err, docs) {
     		if (err) {
     		  	res.status(500).send({error:"Something went wrong, please contact bdjones@mit.edu"});
     		} else {
-    			ttlobj.setData(docs);
-    			res.locals.social = docs;
-    			next();
+    			callback(docs);
     		}
   		});
 	};
 
-	social.getData(preloaded,notloaded);
+	social.doCached(loadData, finalize);
 });
 
 var home = require('./routes/home');
