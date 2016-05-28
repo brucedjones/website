@@ -14,15 +14,21 @@ var ttlData =  function (ttl){
 		return true;
 	};
 
-	this.doCached = function(loadData,finalize){
+	this.doCached = function(loadData,finalize,error){
 
 		var props = this.properties;
 
 		finish = function(data){
-			props.preloaded = true;
-			props.loadTime = new Date();
-			props.data = data;
-			finalize(data);
+			if (arguments.length>0)
+			{
+				console.log("num arguments = " + arguments.length);
+				props.preloaded = true;
+				props.loadTime = new Date();
+				props.data = data;
+				finalize(data);
+			} else {
+				error();
+			}
 		};
 
 		if(this.renew()){

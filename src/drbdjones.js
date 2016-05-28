@@ -45,14 +45,18 @@ app.use(function(req,res,next){
 	var loadData = function(callback){
 		db.collection("social").find({}).toArray(function(err, docs) {
     		if (err) {
-    		  	res.status(500).send({error:"Something went wrong, please contact bdjones@mit.edu"});
+    		  	callback();
     		} else {
     			callback(docs);
     		}
   		});
 	};
 
-	social.doCached(loadData, finalize);
+	var error = function(callback){
+		res.status(500).send({error:"Something went wrong, please contact bdjones@mit.edu"});
+	};
+
+	social.doCached(loadData, finalize, error);
 });
 
 var home = require('./routes/home');
