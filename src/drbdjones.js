@@ -28,19 +28,35 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use("/public", express.static(path.join(__dirname, 'public')));
 
-// Make our db accessible to our router
+// Make our db accessible to our router and load social data
+var ttlData = require('./ttlData');
+var social = new ttlData(20000);
+
 app.use(function(req,res,next){
 	
-	db.collection("social").find({}).toArray(function(err, docs) {
-    	if (err) {
-    	  	res.status(500).send({error:"Something went wrong, please contact bdjones@mit.edu"});
-    	} else {
-    		res.locals.db = db;
-    		res.locals.social = docs;
-    		res.locals.fixed_footer = false;
-    		next();
-    	}
-  	});
+	res.locals.db = db;
+	res.locals.fixed_footer = false;
+
+	var preloaded = function(data){
+		console.log("using preloaded social data");
+		res.locals.social = data;
+		next();
+	};
+
+	var notloaded = function(ttlobj){
+		console.log("Getting new social data");
+		db.collection("social").find({}).toArray(function(err, docs) {
+    		if (err) {
+    		  	res.status(500).send({error:"Something went wrong, please contact bdjones@mit.edu"});
+    		} else {
+    			ttlobj.setData(docs);
+    			res.locals.social = docs;
+    			next();
+    		}
+  		});
+	};
+
+	social.getData(preloaded,notloaded);
 });
 
 var home = require('./routes/home');
