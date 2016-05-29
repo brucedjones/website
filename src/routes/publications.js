@@ -8,7 +8,7 @@ var publications = new ttlData(20000,5);
 
 router.get('/publications', function(req, res) {
 
-    res.locals.fixed_footer = true;
+    res.locals.fixed_footer = false;
 
     var finalize = function(data){
         res.locals.publications = data;
