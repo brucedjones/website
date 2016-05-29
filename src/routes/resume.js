@@ -3,8 +3,11 @@ var router = express.Router();
 
 var async = require('async');
 
+var ttl = 60000;
+var ttlRetries = 5;
+
 var ttlData = require('../ttlData');
-var resume = new ttlData(20000,5);
+var resume = new ttlData(ttl,ttlRetries);
 
 router.get('/resume', function(req, res) {
 

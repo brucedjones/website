@@ -1,8 +1,11 @@
 var express = require('express');
 var router = express.Router();
 
+var ttl = 60000;
+var ttlRetries = 5;
+
 var ttlData = require('../ttlData');
-var software = new ttlData(20000,5);
+var software = new ttlData(ttl,ttlRetries);
 
 router.get('/software', function(req, res) {
 

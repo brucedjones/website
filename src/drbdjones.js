@@ -29,8 +29,10 @@ app.use(cookieParser());
 app.use("/public", express.static(path.join(__dirname, 'public')));
 
 // Make our db accessible to our router and load social data
+var ttl = 60000;
+var ttlRetries = 5;
 var ttlData = require('./ttlData');
-var social = new ttlData(20000,5);
+var social = new ttlData(ttl,ttlRetries);
 
 app.use(function(req,res,next){
 	

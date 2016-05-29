@@ -4,8 +4,11 @@ var router = express.Router();
 var http = require('http');
 var async = require('async');
 
+var ttl = 60000;
+var ttlRetries = 5;
+
 var ttlData = require('../ttlData');
-var hardware = new ttlData(20000,5);
+var hardware = new ttlData(ttl,ttlRetries);
 
 router.get('/hardware', function(req, res) {
 
@@ -104,7 +107,7 @@ router.get('/hardware/:title', function(req , res){
 			res.locals.fixed_footer = true;
 			res.status(404).render('error');
         } else {
-        	if(!hardware_projects.hasOwnProperty(req.params.title)) hardware_projects[req.params.title] = new ttlData(20000,5);
+        	if(!hardware_projects.hasOwnProperty(req.params.title)) hardware_projects[req.params.title] = new ttlData(ttl,ttlRetries);
 
         	var finalize = function(data){
 		        res.locals.project = data;
