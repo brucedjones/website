@@ -68,7 +68,9 @@ router.get('/hardware', function(req, res) {
 						});
 					});
 
-					req.on('error', function(err){callback('Error getting data via http for ' + album.title);});
+					req.on('error', function(err){
+						callback('Error getting data via http for ' + album.title);
+					});
 
 					req.end();
 			    };
@@ -89,6 +91,8 @@ router.get('/hardware', function(req, res) {
 
 });
 
+hardware_projects = {};
+
 router.get('/hardware/:title', function(req , res){
 
     res.locals.fixed_footer = false;
@@ -100,52 +104,62 @@ router.get('/hardware/:title', function(req , res){
 			res.locals.fixed_footer = true;
 			res.status(404).render('error');
         } else {
-        	album_id = docs[0].picasa;
-   			url = "http://picasaweb.google.com/data/feed/api/user/102348159258081608276/albumid/" + album_id + "?alt=json";
-   			var req = http.request(url, function(response) {
-				var str = '';
+        	if(!hardware_projects.hasOwnProperty(req.params.title)) hardware_projects[req.params.title] = new ttlData(20000,5);
 
-					  //another chunk of data has been recieved, so append it to `str`
-				response.on('data', function (chunk) {
-				  str += chunk;
-				});
+        	var finalize = function(data){
+		        res.locals.project = data;
+				res.render('hardware_project');
+		    };
 
-				  //the whole response has been recieved, so we just print it out here
-				response.on('end', function () {
-					try{
-						album_data = JSON.parse(str);
-				  		title = album_data.feed.title.$t;
+		    var loadData = function(callback){
 
-				  		photos = [];
-				  		album_data.feed.entry.forEach(function(photo){
-				  			url = photo.media$group.media$content[0].url;
-				  			fname = url.substring(url.lastIndexOf('/')+1);
-				  			url = url.substring(0,url.lastIndexOf('/')+1);
-				  			description = photo.media$group.media$description.$t;
-				  			photos.push({url:url,fname:fname,description:description});
-				  		});
+		    		album_id = docs[0].picasa;
+		   			url = "http://picasaweb.google.com/data/feed/api/user/102348159258081608276/albumid/" + album_id + "?alt=json";
+		   			var req = http.request(url, function(response) {
+						var str = '';
 
-				  		res.locals.project = {id:docs[0].title,title:title,photos:photos, description:docs[0].description};
-						res.render('hardware_project');
-					} catch (e) {
-						console.log("Could not parse HTML request for project " + docs[0].title);
-					  	var error = {code:"500",description:"<p>Something went wrong! Please try again in a few minutes.</p><p>If the problem persists please contact contact <a href='mailto:bdjones@mit.edu'>bdjones@mit.edu</a></p>"};
-						res.locals.error = error;
-						res.locals.fixed_footer = true;
-						res.status(500).render('error');
-					}
-				});
-			});
+							  //another chunk of data has been recieved, so append it to `str`
+						response.on('data', function (chunk) {
+						  str += chunk;
+						});
 
-			req.on('error', function(err){
-				var error = {code:"500",description:"<p>Something went wrong! Please try again in a few minutes.</p><p>If the problem persists please contact contact <a href='mailto:bdjones@mit.edu'>bdjones@mit.edu</a></p>"};
-				res.locals.error = error;
-				res.locals.fixed_footer = true;
-				res.status(500).render('error');
-				console.log('Error getting data via http for ' + docs[0].title);
-			});
+						  //the whole response has been recieved, so we just print it out here
+						response.on('end', function () {
+							try{
+								album_data = JSON.parse(str);
+						  		title = album_data.feed.title.$t;
 
-			req.end();
+						  		photos = [];
+						  		album_data.feed.entry.forEach(function(photo){
+						  			url = photo.media$group.media$content[0].url;
+						  			fname = url.substring(url.lastIndexOf('/')+1);
+						  			url = url.substring(0,url.lastIndexOf('/')+1);
+						  			description = photo.media$group.media$description.$t;
+						  			photos.push({url:url,fname:fname,description:description});
+						  		});
+
+						  		callback({id:docs[0].title,title:title,photos:photos, description:docs[0].description});
+							} catch (e) {
+								callback();
+							}
+						});
+					});
+
+					req.on('error', function(err){
+						callback();
+					});
+
+					req.end();
+			};
+
+			var errorCB = function(callback){
+		        var error = {code:"500",description:"<p>Something went wrong! Please try again in a few minutes.</p><p>If the problem persists please contact contact <a href='mailto:bdjones@mit.edu'>bdjones@mit.edu</a></p>"};
+		        res.locals.error = error;
+		        res.locals.fixed_footer = true;
+		        res.status(500).render('error');
+		    };
+
+		    hardware_projects[req.params.title].doCached(loadData, finalize, errorCB);
         }
     });
 });
