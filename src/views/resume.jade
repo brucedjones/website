@@ -10,7 +10,7 @@ block append content
 				|Skills
 		.col-xs-12.col-md-9
 			.col-xs-12
-				each set in skills
+				each set in resume.skills
 					p
 						#[b #{set.title}: ]
 						each skill, i in set.items
@@ -24,7 +24,7 @@ block append content
 			h2
 				|Work Experience
 		.col-xs-12.col-md-9
-			each job in work
+			each job in resume.work
 				.col-xs-6
 					b #{job.title}
 				.col-xs-6.text-right
@@ -45,7 +45,7 @@ block append content
 			h2
 				|Education
 		.col-xs-12.col-md-9
-			each degree in education
+			each degree in resume.education
 				.col-xs-6
 					b #{degree.degree}
 				.col-xs-6.text-right
@@ -63,7 +63,7 @@ block append content
 				|Activities
 		.col-xs-12.col-md-9
 			ul(class="list-unstyled icon-list chevron-right")
-				each activity in activities
+				each activity in resume.activities
 					li
 						!{activity.item}
 
