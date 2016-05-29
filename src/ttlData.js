@@ -1,6 +1,6 @@
-var ttlData =  function (ttl){
+var ttlData =  function (ttl,maxRetries){
 
-	this.properties = {preloaded:false,loadTime:new Date(),ttl:ttl, data:{}};
+	this.properties = {preloaded:false,loadTime:new Date(),ttl:ttl, data:{}, retries:0, maxRetries:maxRetries};
 
 	this.renew = function(){
 		if(this.properties.preloaded)
@@ -18,15 +18,24 @@ var ttlData =  function (ttl){
 
 		var props = this.properties;
 
-		finish = function(data){
+		var finish = function(data){
 			if (arguments.length>0)
 			{
 				props.preloaded = true;
 				props.loadTime = new Date();
 				props.data = data;
+				props.retries = 0;
 				finalize(data);
 			} else {
-				error();
+				if(props.retries<maxRetries)
+				{
+					console.log(props.retries);
+					props.retries++;
+					loadData(finish);
+				} else {
+					props.retries=0;
+					error();
+				}
 			}
 		};
 

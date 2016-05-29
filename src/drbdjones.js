@@ -30,7 +30,7 @@ app.use("/public", express.static(path.join(__dirname, 'public')));
 
 // Make our db accessible to our router and load social data
 var ttlData = require('./ttlData');
-var social = new ttlData(20000);
+var social = new ttlData(20000,5);
 
 app.use(function(req,res,next){
 	
