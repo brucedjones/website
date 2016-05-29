@@ -3,40 +3,53 @@ var router = express.Router();
 
 var async = require('async');
 
+var ttlData = require('../ttlData');
+var publications = new ttlData(20000,5);
+
 router.get('/publications', function(req, res) {
 
-    res.locals.fixed_footer = true;
-
-    collections = ["journal", "conference"];
-
-    var render = function(err) {
-        if(err)
-        {
-            var error = {code:"500",description:"<p>Something went wrong! Please try again in a few minutes.</p><p>If the problem persists please contact contact <a href='mailto:bdjones@mit.edu'>bdjones@mit.edu</a></p>"};
-            res.locals.error = error;
-            res.locals.fixed_footer = true;
-            res.status(500).render('error');
-        } else {
-            res.render('publications');
-        }
+    var finalize = function(data){
+        res.locals.publications = data;
+        res.render('publications');
     };
 
-    var getCollection = function(collection,callback){
-        res.locals.db.collection(collection).find({}).sort({year:-1}).toArray(function(err, docs) {
-            if (err) {
-                var error = {code:"500",description:"<p>Something went wrong! Please try again in a few minutes.</p><p>If the problem persists please contact contact <a href='mailto:bdjones@mit.edu'>bdjones@mit.edu</a></p>"};
-                res.locals.error = error;
-                res.locals.fixed_footer = true;
-                res.status(500).render('error');
-                callback("Failed to get data from" + collection);
+    var loadData = function(ttlCallback){
+
+        collections = ["journal", "conference"];
+
+        pubData = {};
+
+        var render = function(err) {
+            if(err)
+            {
+                ttlCallback();
             } else {
-                res.locals[collection] = docs;
-                callback();
+                ttlCallback(pubData);
             }
-        });
+        };
+
+        var getCollection = function(collection,callback){
+            res.locals.db.collection(collection).find({}).sort({year:-1}).toArray(function(err, docs) {
+                if (err) {
+                    callback("Failed to get data from" + collection);
+                } else {
+                    pubData[collection] = docs;
+                    callback();
+                }
+            });
+        };
+
+        async.each(collections,getCollection,render);
     };
 
-    async.each(collections,getCollection,render);
+    var error = function(callback){
+        var error = {code:"500",description:"<p>Something went wrong! Please try again in a few minutes.</p><p>If the problem persists please contact contact <a href='mailto:bdjones@mit.edu'>bdjones@mit.edu</a></p>"};
+        res.locals.error = error;
+        res.locals.fixed_footer = true;
+        res.status(500).render('error');
+    };
+
+    publications.doCached(loadData, finalize, error);
 });
 
 module.exports = router;

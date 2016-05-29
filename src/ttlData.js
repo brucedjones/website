@@ -40,8 +40,10 @@ var ttlData =  function (ttl,maxRetries){
 		};
 
 		if(this.renew()){
+			console.log("Getting new data");
 			loadData(finish);		
 		} else {
+			console.log("Using existing data");
 			finalize(this.properties.data);
 		}
 	};

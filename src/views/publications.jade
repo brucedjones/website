@@ -9,7 +9,7 @@ block append content
 			h2
 				|Journal Articles
 		.col-xs-12.col-md-9
-			each article in journal
+			each article in publications.journal
 				p
 					if article.doi
 						a(href="http://dx.doi.org/#{article.doi}", style="color:inherit;")
@@ -24,7 +24,7 @@ block append content
 			h2
 				|Conferences
 		.col-xs-12.col-md-9
-			each conf in conference
+			each conf in publications.conference
 				p
 					if conf.doi
 						a(href="http://dx.doi.org/#{conf.doi}", style="color:inherit;")
