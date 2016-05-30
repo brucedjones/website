@@ -29,8 +29,12 @@ html
                                 ul.nav.navbar-nav
                                     li(style="display: inline-flex !important;")
                                         each soc in social
-                                            a(style="padding-left:3px;padding-right:3px;",href="#{soc.url}",target="_blank")
-                                                i(class="#{soc.fa}")
+                                            if soc.noNewTab
+                                                a(style="padding-left:3px;padding-right:3px;",href="#{soc.url}")
+                                                    i(class="#{soc.fa}")
+                                            else
+                                                a(style="padding-left:3px;padding-right:3px;",href="#{soc.url}",target="_blank")
+                                                    i(class="#{soc.fa}")
                                 ul.nav.navbar-nav.navbar-right
                                     li
                                         a(style="padding-left:3px;",href="/resume")
