@@ -12,54 +12,48 @@ html
     meta(name="viewport" content="width=device-width, initial-scale=1.0")
     block head
   body
-    .jumbotron(style="background:#2C3E50 !important")
-        .container
-            .navbar.navbar-default.navbar-static
-                .container-fluid
-                    .navbar-header
-                        button(data-toggle="collapse" data-target=".navbar-collapse").navbar-toggle.collapsed
-                            span.icon-bar
-                            span.icon-bar
-                            span.icon-bar
-                        a(href="/").navbar-brand
-                            |Dr. Bruce Jones
-                    div(id="navbar").navbar-collapse.collapse
-                        ul.nav.navbar-nav
-                            li(style="display: inline-flex !important;")
-                                each soc in social
-                                    a(style="padding-left:3px;padding-right:3px;",href="#{soc.url}",target="_blank")
-                                        i(class="#{soc.fa}")
-                        ul.nav.navbar-nav.navbar-right
-                            li
-                                a(style="padding-left:3px;",href="/resume")
-                                    |Resume
-                            li
-                                a(style="padding-left:3px;",href="/publications")
-                                    |Publications
-                            li
-                                a(style="padding-left:3px;",href="/software")
-                                    |Software
-                            li
-                                a(style="padding-left:3px;",href="/hardware")
-                                    |Hardware
-  div(id="wrap")
-    .container
-        #content
-            block content
-    if fixed_footer === true
-        footer.hidden-md.hidden-lg
-            .container.text-center
-                p.text-muted
-                    |Copyright &copy; #{new Date().getFullYear()} Dr. Bruce Jones
-        footer.navbar-fixed-bottom.hidden-xs.hidden-sm
-            .container.text-center
-                p.text-muted
-                    |Copyright &copy; #{new Date().getFullYear()} Dr. Bruce Jones
-    else
-        footer
-            .container.text-center
-                p.text-muted
-                    |Copyright &copy; #{new Date().getFullYear()} Dr. Bruce Jones
+    .page-row
+        div
+            .jumbotron(style="background:#2C3E50 !important")
+                .container
+                    .navbar.navbar-default.navbar-static
+                        .container-fluid
+                            .navbar-header
+                                button(data-toggle="collapse" data-target=".navbar-collapse").navbar-toggle.collapsed
+                                    span.icon-bar
+                                    span.icon-bar
+                                    span.icon-bar
+                                a(href="/").navbar-brand
+                                    |Dr. Bruce Jones
+                            div(id="navbar").navbar-collapse.collapse
+                                ul.nav.navbar-nav
+                                    li(style="display: inline-flex !important;")
+                                        each soc in social
+                                            a(style="padding-left:3px;padding-right:3px;",href="#{soc.url}",target="_blank")
+                                                i(class="#{soc.fa}")
+                                ul.nav.navbar-nav.navbar-right
+                                    li
+                                        a(style="padding-left:3px;",href="/resume")
+                                            |Resume
+                                    li
+                                        a(style="padding-left:3px;",href="/publications")
+                                            |Publications
+                                    li
+                                        a(style="padding-left:3px;",href="/software")
+                                            |Software
+                                    li
+                                        a(style="padding-left:3px;",href="/hardware")
+                                            |Hardware
+    .page-row.page-row-expanded
+        div(id="wrap")
+          .container
+              #content
+                  block content
+    footer.page-row
+        div
+          .container.text-center
+            p.text-muted
+              |Copyright &copy; #{new Date().getFullYear()} Dr. Bruce Jones
   script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js")
   script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js",integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS",crossorigin="anonymous")
   script(type='text/javascript').

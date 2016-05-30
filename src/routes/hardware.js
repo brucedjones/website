@@ -12,8 +12,6 @@ var hardware = new ttlData(ttl,ttlRetries);
 
 router.get('/hardware', function(req, res) {
 
-    res.locals.fixed_footer = false;
-
 	var finalize = function(data){
         res.locals.hardware = data;
         res.render('hardware');
@@ -84,9 +82,7 @@ router.get('/hardware', function(req, res) {
     };
 
     var error = function(callback){
-        var error = {code:"500",description:"<p>Something went wrong! Please try again in a few minutes.</p><p>If the problem persists please contact contact <a href='mailto:bdjones@mit.edu'>bdjones@mit.edu</a></p>"};
-        res.locals.error = error;
-        res.locals.fixed_footer = true;
+        res.locals.error = {code:"500",description:"<p>Something went wrong! Please try again in a few minutes.</p><p>If the problem persists please contact contact <a href='mailto:bdjones@mit.edu'>bdjones@mit.edu</a></p>"};
         res.status(500).render('error');
     };
 
@@ -97,8 +93,6 @@ router.get('/hardware', function(req, res) {
 hardware_projects = {};
 
 router.get('/hardware/:title', function(req , res){
-
-    res.locals.fixed_footer = false;
 
     res.locals.db.collection("hardware").find({title:req.params.title}).toArray(function(err, docs) {
         if (err || docs.length<1) {
@@ -156,9 +150,7 @@ router.get('/hardware/:title', function(req , res){
 			};
 
 			var errorCB = function(callback){
-		        var error = {code:"500",description:"<p>Something went wrong! Please try again in a few minutes.</p><p>If the problem persists please contact contact <a href='mailto:bdjones@mit.edu'>bdjones@mit.edu</a></p>"};
-		        res.locals.error = error;
-		        res.locals.fixed_footer = true;
+		        res.locals.error = {code:"500",description:"<p>Something went wrong! Please try again in a few minutes.</p><p>If the problem persists please contact contact <a href='mailto:bdjones@mit.edu'>bdjones@mit.edu</a></p>"};
 		        res.status(500).render('error');
 		    };
 
