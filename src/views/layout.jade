@@ -23,30 +23,32 @@ html
                                     span.icon-bar
                                     span.icon-bar
                                     span.icon-bar
-                                a(href="/").navbar-brand
-                                    |Dr. Bruce Jones
-                                ul.nav.navbar-nav
-                                    li(style="display: inline-flex !important;")
-                                        each soc in social
-                                            if soc.noNewTab
-                                                a(style="padding-left:3px;padding-right:3px;",href="#{soc.url}")
-                                                    i(class="#{soc.fa}")
-                                            else
-                                                a(style="padding-left:3px;padding-right:3px;",href="#{soc.url}",target="_blank")
-                                                    i(class="#{soc.fa}")
+                                .navbar-brand
+                                    a(href="/")
+                                        |Dr. Bruce Jones
+                                    small
+                                        ul.nav.navbar-nav
+                                            li(style="display: inline-flex !important;")
+                                                each soc in social
+                                                    if soc.noNewTab
+                                                        a(style="padding-left:3px;padding-right:3px;padding-top:5px",href="#{soc.url}")
+                                                            i(class="#{soc.fa}")
+                                                    else
+                                                        a(style="padding-left:3px;padding-right:3px;padding-top:5px",href="#{soc.url}",target="_blank")
+                                                            i(class="#{soc.fa}")
                             div(id="navbar").navbar-collapse.collapse
                                 ul.nav.navbar-nav.navbar-right
                                     li
-                                        a(style="padding-left:3px;",href="/resume")
+                                        a(href="/resume")
                                             |Resume
                                     li
-                                        a(style="padding-left:3px;",href="/publications")
+                                        a(href="/publications")
                                             |Publications
                                     li
-                                        a(style="padding-left:3px;",href="/software")
+                                        a(href="/software")
                                             |Software
                                     li
-                                        a(style="padding-left:3px;",href="/hardware")
+                                        a(href="/hardware")
                                             |Hardware
     .page-row.page-row-expanded
         div(id="wrap")

@@ -64,3 +64,13 @@ body {
 
 .page-row-expanded { height: 100%; }
 
+.navbar-brand {
+  line-height:12px;
+  padding-top:15px;
+  padding-bottom:65px;
+}
+
+.navbar-brand small {
+  display:block;
+  font-size:18px;
+}
