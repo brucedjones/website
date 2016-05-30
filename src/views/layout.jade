@@ -25,7 +25,6 @@ html
                                     span.icon-bar
                                 a(href="/").navbar-brand
                                     |Dr. Bruce Jones
-                            div(id="navbar").navbar-collapse.collapse
                                 ul.nav.navbar-nav
                                     li(style="display: inline-flex !important;")
                                         each soc in social
@@ -35,6 +34,7 @@ html
                                             else
                                                 a(style="padding-left:3px;padding-right:3px;",href="#{soc.url}",target="_blank")
                                                     i(class="#{soc.fa}")
+                            div(id="navbar").navbar-collapse.collapse
                                 ul.nav.navbar-nav.navbar-right
                                     li
                                         a(style="padding-left:3px;",href="/resume")
