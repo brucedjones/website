@@ -1,0 +1,108 @@
+<!doctype <!DOCTYPE html>
+<html>
+<head>
+	<title>Scout</title>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<script src="mqttws31-min.js"></script>
+	<script type="text/javascript">
+
+		// Create a client instance 18.111.103.72
+		//client = new Paho.MQTT.Client("fe80::a3:4eff:fe16:80d1", 1883,'/mqtt', "bruce");
+		var client= new Paho.MQTT.Client('162.243.219.88', 9001, "bruce");		
+		
+		// called when the client connects
+		function onConnect() {
+		  // Once a connection has been made, make a subscription and send a message.
+		  console.log("onConnect");
+		  client.subscribe("button/0/output");
+		  client.subscribe("button/1/output");
+		  client.subscribe("button/2/output");
+		  client.subscribe("button/3/output");
+		}
+        client.connect({onSuccess:onConnect});
+		
+		// called when the client loses its connection
+		client.onConnectionLost = (responseObject) => {
+		  if (responseObject.errorCode !== 0) {
+		    console.log("onConnectionLost:"+responseObject.errorMessage);
+		  }
+		};
+
+		client.onMessageArrived = (message) => {
+            console.log("onMessageArrived:"+message.payloadString);
+            var message = message.payloadString;
+            channel = message.destinationName;
+            var state = false;
+            if(message == "on") state = true;
+            switch(channel)
+            {
+                case "button/0/output":
+                    SetButtonState(state,0);
+                    break;
+                case "button/1/output":
+                    SetButtonState(state,1);
+                    break;
+                case "button/2/output":
+                    SetButtonState(state,2);
+                    break;
+                case "button/3/output":
+                    SetButtonState(state,3);
+                    break;
+            }
+        }
+
+        function sendMessage(channel, text) {
+        	var pahoMessage = new Paho.MQTT.Message(text);
+            pahoMessage.destinationName = channel;
+            client.send(pahoMessage);
+        }
+			
+            
+		var buttonOnText = "lens"
+        var buttonOffText = "panorama_fish_eye"
+        var SetButtonState = (state,id) =>
+        {
+            var buttonHTMLid = 'button'+id;
+            button = document.getElementById(buttonHTMLid);
+            button.innerHTML = state ? buttonOnText : buttonOffText;
+        };
+
+        var buttonDown = (id) =>
+        {
+            SetButtonState(true,id);
+            sendMessage("button/"+id+"/input","on")
+        }
+
+        var buttonUp = (id) =>
+        {
+            SetButtonState(false,id);
+            sendMessage("button/"+id+"/input","off")
+        }
+        
+	</script>
+</head>
+<body>
+
+<div class="container" style="padding-top:40px">
+    <div id="messages" class="col-xs-12 text-center">
+        <div class="col-xs-3" onmousedown="buttonDown(3)" onmouseup="buttonUp(3)">
+            <i id="button0" class="material-icons" style="font-size: 128px;">panorama_fish_eye</i>
+        </div>
+        <div class="col-xs-3" onmousedown="buttonDown(2)" onmouseup="buttonUp(2)">
+            <i id="button1" class="material-icons" style="font-size: 128px;">panorama_fish_eye</i>
+        </div>
+        <div class="col-xs-3" onmousedown="buttonDown(1)" onmouseup="buttonUp(1)">
+            <i id="button2" class="material-icons" style="font-size: 128px;">panorama_fish_eye</i>
+        </div>
+        <div class="col-xs-3" onmousedown="buttonDown(0)" onmouseup="buttonUp(0)">
+            <i id="button3" class="material-icons" style="font-size: 128px;">panorama_fish_eye</i>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</body>
+</html>
