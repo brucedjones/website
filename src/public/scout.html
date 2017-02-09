@@ -73,12 +73,14 @@
         {
             SetButtonState(true,id);
             sendMessage("button/"+id+"/input","on")
+            preventDefault();
         }
 
         var buttonUp = (id) =>
         {
             SetButtonState(false,id);
             sendMessage("button/"+id+"/input","off")
+            preventDefault();
         }
         
 	</script>
