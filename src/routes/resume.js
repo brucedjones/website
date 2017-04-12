@@ -32,7 +32,10 @@ router.get('/resume', function(req, res) {
         };
 
         var getCollection = function(collection,callback){
-            res.locals.db.collection(collection).find({}).sort({year:-1}).toArray(function(err, docs) {
+            var sortObj = {};
+            if(collection=="work") sortObj = {order:1};
+            if(collection=="education") sortObj = {year:-1};
+            res.locals.db.collection(collection).find({}).sort(sortObj).toArray(function(err, docs) {
                 if (err) {
                     callback("Failed to get data from" + collection);
                 } else {
