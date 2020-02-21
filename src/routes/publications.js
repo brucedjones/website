@@ -7,32 +7,31 @@ var ttl = 60000;
 var ttlRetries = 5;
 
 var ttlData = require('../ttlData');
-var publications = new ttlData(ttl,ttlRetries);
+var publications = new ttlData(ttl, ttlRetries);
 
-router.get('/publications', function(req, res) {
+router.get('/publications', function (req, res) {
 
-    var finalize = function(data){
+    var finalize = function (data) {
         res.locals.publications = data;
         res.render('publications');
     };
 
-    var loadData = function(ttlCallback){
+    var loadData = function (ttlCallback) {
 
         collections = ["journal", "conference"];
 
         pubData = {};
 
-        var render = function(err) {
-            if(err)
-            {
+        var render = function (err) {
+            if (err) {
                 ttlCallback();
             } else {
                 ttlCallback(pubData);
             }
         };
 
-        var getCollection = function(collection,callback){
-            res.locals.db.collection(collection).find({}).sort({year:-1}).toArray(function(err, docs) {
+        var getCollection = function (collection, callback) {
+            res.locals.db.collection(collection).find({}).sort({ year: -1 }).toArray(function (err, docs) {
                 if (err) {
                     callback("Failed to get data from" + collection);
                 } else {
@@ -42,11 +41,11 @@ router.get('/publications', function(req, res) {
             });
         };
 
-        async.each(collections,getCollection,render);
+        async.each(collections, getCollection, render);
     };
 
-    var error = function(callback){
-        res.locals.error = {code:"500",description:"<p>Something went wrong! Please try again in a few minutes.</p><p>If the problem persists please contact contact <a href='mailto:bdjones@mit.edu'>bdjones@mit.edu</a></p>"};
+    var error = function (callback) {
+        res.locals.error = { code: "500", description: "<p>Something went wrong! Please try again in a few minutes.</p><p>If the problem persists please contact contact <a href='mailto:bruce.david.jones@gmail.com'>bruce.david.jones@gmail.com</a></p>" };
         res.status(500).render('error');
     };
 

@@ -26,17 +26,13 @@ block append content
 						if(i==0)
 							.row-fluid.item.active
 								.col-xs-12.text-center
-									a(href="#{photo.url}s1024/#{photo.fname}" target="_blank")
-										img(id="disp-img" src="#{photo.url}s768/#{photo.fname}" style ="object-fit:cover; object-position: center; height: 200px;").img-thumbnail
-									br
-									|#{photo.description}
+									a(href="#{photo}" target="_blank")
+										img(id="disp-img" src="#{photo}" style ="object-fit:cover; object-position: center; height: 200px;").img-thumbnail
 						else
 							.row-fluid.item
 								.col-xs-12.text-center
-									a(href="#{photo.url}s1024/#{photo.fname}" target="_blank")
-										img(id="disp-img" src="#{photo.url}s768/#{photo.fname}" style ="object-fit:cover; object-position: center; height: 200px;").img-thumbnail
-									br
-									|#{photo.description}
+									a(href="#{photo}" target="_blank")
+										img(id="disp-img" src="#{photo}" style ="object-fit:cover; object-position: center; height: 200px;").img-thumbnail
 				a(href="#sm-carousel" data-slide="prev").left.carousel-control
 					.i(aria-hidden="true").fa.fa-chevron-left(style="color: black;")
 				a(href="#sm-carousel" data-slide="next").right.carousel-control
@@ -54,17 +50,13 @@ block append content
 						if(i==0)
 							.row-fluid.item.active
 								.col-xs-12.text-center
-									a(href="#{photo.url}s1024/#{photo.fname}" target="_blank")
-										img(id="disp-img" src="#{photo.url}s768/#{photo.fname}" style ="object-fit:cover; object-position: center; height: 400px;").img-thumbnail
-									br
-									|#{photo.description}
+									a(href="#{photo}" target="_blank")
+										img(id="disp-img" src="#{photo}" style ="object-fit:cover; object-position: center; height: 400px;").img-thumbnail
 						else
 							.row-fluid.item
 								.col-xs-12.text-center
-									a(href="#{photo.url}s1024/#{photo.fname}" target="_blank")
-										img(id="disp-img" src="#{photo.url}s768/#{photo.fname}" style ="object-fit:cover; object-position: center; height: 400px;").img-thumbnail
-									br
-									|#{photo.description}
+									a(href="#{photo}" target="_blank")
+										img(id="disp-img" src="#{photo}" style ="object-fit:cover; object-position: center; height: 400px;").img-thumbnail
 				a(href="#lg-carousel" data-slide="prev").left.carousel-control
 					.i(aria-hidden="true").fa.fa-chevron-left(style="color: black;")
 				a(href="#lg-carousel" data-slide="next").right.carousel-control
