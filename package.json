@@ -13,7 +13,7 @@
     "serve-favicon": "~2.2.1",
     "mongodb": "~2.1.18",
     "morgan": "~1.5.3",
-    "async": "~2.0.0-rc.4"
+    "async": "~2.6.4"
   },
   "scripts": {
     "start": "node src/drbdjones.js"
